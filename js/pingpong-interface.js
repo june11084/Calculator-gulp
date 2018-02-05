@@ -10,4 +10,13 @@ $(document).ready(function() {
       $('#solution').append("<li>" + element + "</li>");
     });
   });
+
+  $('#add-form').submit(function(event) {
+    event.preventDefault();
+    var addOne = parseInt($('#addOne').val());
+    var addTwo = parseInt($('#addTwo').val());
+    var simpleCalculator = new Calculator("hot pink");
+    var output = simpleCalculator.add(addOne, addTwo);
+    $('#solution').append("<li>" + output + "</li>");
+  });
 });
