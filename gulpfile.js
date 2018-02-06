@@ -19,6 +19,7 @@ var utilities = require('gulp-util');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var jshint = require('gulp-jshint');
+var babelify = require("babelify")
 var buildProduction = utilities.env.production;
 
 gulp.task('myTask', function(){
@@ -44,6 +45,7 @@ gulp.task('serve', function() {
       index: "index.html"
     }
   });
+
   gulp.watch(['js/*.js'], ['jsBuild']);
   gulp.watch(['bower.json'], ['bowerBuild']);
 });
@@ -54,6 +56,9 @@ gulp.task("clean", function(){
 
 gulp.task('jsBrowserify',['concatInterface'], function() {
   return browserify({ entries: ['./tmp/allConcat.js'] })
+    .transform(babelify.configure({
+      presets: ["es2015"]
+    }))
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'));
